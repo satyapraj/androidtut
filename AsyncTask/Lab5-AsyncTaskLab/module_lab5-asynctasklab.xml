@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_lab5-asynctasklab" default="compile.module.lab5-asynctasklab">
+  <dirname property="module.lab5-asynctasklab.basedir" file="${ant.file.module_lab5-asynctasklab}"/>
+  
+  <property name="module.jdk.home.lab5-asynctasklab" value="${jdk.home.android_api_18_platform}"/>
+  <property name="module.jdk.bin.lab5-asynctasklab" value="${jdk.bin.android_api_18_platform}"/>
+  <property name="module.jdk.classpath.lab5-asynctasklab" value="jdk.classpath.android_api_18_platform"/>
+  
+  <property name="compiler.args.lab5-asynctasklab" value="-encoding UTF-8 -source 1.7 ${compiler.args}"/>
+  
+  <property name="lab5-asynctasklab.output.dir" value="${module.lab5-asynctasklab.basedir}/../out/production/Lab5-AsyncTaskLab"/>
+  <property name="lab5-asynctasklab.testoutput.dir" value="${module.lab5-asynctasklab.basedir}/../out/test/Lab5-AsyncTaskLab"/>
+  
+  <path id="lab5-asynctasklab.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="lab5-asynctasklab.module.production.classpath">
+    <path refid="${module.jdk.classpath.lab5-asynctasklab}"/>
+  </path>
+  
+  <path id="lab5-asynctasklab.runtime.production.module.classpath">
+    <pathelement location="${lab5-asynctasklab.output.dir}"/>
+  </path>
+  
+  <path id="lab5-asynctasklab.module.classpath">
+    <path refid="${module.jdk.classpath.lab5-asynctasklab}"/>
+    <pathelement location="${lab5-asynctasklab.output.dir}"/>
+  </path>
+  
+  <path id="lab5-asynctasklab.runtime.module.classpath">
+    <pathelement location="${lab5-asynctasklab.testoutput.dir}"/>
+    <pathelement location="${lab5-asynctasklab.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.lab5-asynctasklab">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.lab5-asynctasklab">
+    <patternset refid="excluded.from.module.lab5-asynctasklab"/>
+  </patternset>
+  
+  <path id="lab5-asynctasklab.module.sourcepath">
+    <dirset dir="${module.lab5-asynctasklab.basedir}">
+      <include name="src"/>
+      <include name="gen"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.lab5-asynctasklab" depends="compile.module.lab5-asynctasklab.production,compile.module.lab5-asynctasklab.tests" description="Compile module Lab5-AsyncTaskLab"/>
+  
+  <target name="compile.module.lab5-asynctasklab.production" depends="register.custom.compilers" description="Compile module Lab5-AsyncTaskLab; production classes">
+    <mkdir dir="${lab5-asynctasklab.output.dir}"/>
+    <javac2 destdir="${lab5-asynctasklab.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.lab5-asynctasklab}/javac">
+      <compilerarg line="${compiler.args.lab5-asynctasklab}"/>
+      <bootclasspath refid="lab5-asynctasklab.module.bootclasspath"/>
+      <classpath refid="lab5-asynctasklab.module.production.classpath"/>
+      <src refid="lab5-asynctasklab.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.lab5-asynctasklab"/>
+    </javac2>
+    
+    <copy todir="${lab5-asynctasklab.output.dir}">
+      <fileset dir="${module.lab5-asynctasklab.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.lab5-asynctasklab.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.lab5-asynctasklab.tests" depends="register.custom.compilers,compile.module.lab5-asynctasklab.production" description="compile module Lab5-AsyncTaskLab; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.lab5-asynctasklab" description="cleanup module">
+    <delete dir="${lab5-asynctasklab.output.dir}"/>
+    <delete dir="${lab5-asynctasklab.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_lab5-asynctasklabtest" default="compile.module.lab5-asynctasklabtest">
+  <dirname property="module.lab5-asynctasklabtest.basedir" file="${ant.file.module_lab5-asynctasklabtest}"/>
+  
+  <property name="module.jdk.home.lab5-asynctasklabtest" value="${jdk.home.android_api_18_platform}"/>
+  <property name="module.jdk.bin.lab5-asynctasklabtest" value="${jdk.bin.android_api_18_platform}"/>
+  <property name="module.jdk.classpath.lab5-asynctasklabtest" value="jdk.classpath.android_api_18_platform"/>
+  
+  <property name="compiler.args.lab5-asynctasklabtest" value="-encoding UTF-8 -source 1.7 ${compiler.args}"/>
+  
+  <property name="lab5-asynctasklabtest.output.dir" value="${module.lab5-asynctasklabtest.basedir}/../out/production/Lab5-AsyncTaskLabTest"/>
+  <property name="lab5-asynctasklabtest.testoutput.dir" value="${module.lab5-asynctasklabtest.basedir}/../out/test/Lab5-AsyncTaskLabTest"/>
+  
+  <path id="lab5-asynctasklabtest.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="lab5-asynctasklabtest.module.production.classpath">
+    <path refid="${module.jdk.classpath.lab5-asynctasklabtest}"/>
+    <path refid="library.robotium-solo-5.3.1.classpath"/>
+    <pathelement location="${lab5-asynctasklab.output.dir}"/>
+  </path>
+  
+  <path id="lab5-asynctasklabtest.runtime.production.module.classpath">
+    <pathelement location="${lab5-asynctasklabtest.output.dir}"/>
+    <path refid="library.robotium-solo-5.3.1.classpath"/>
+    <path refid="lab5-asynctasklab.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="lab5-asynctasklabtest.module.classpath">
+    <path refid="${module.jdk.classpath.lab5-asynctasklabtest}"/>
+    <pathelement location="${lab5-asynctasklabtest.output.dir}"/>
+    <path refid="library.robotium-solo-5.3.1.classpath"/>
+    <pathelement location="${lab5-asynctasklab.testoutput.dir}"/>
+    <pathelement location="${lab5-asynctasklab.output.dir}"/>
+  </path>
+  
+  <path id="lab5-asynctasklabtest.runtime.module.classpath">
+    <pathelement location="${lab5-asynctasklabtest.testoutput.dir}"/>
+    <pathelement location="${lab5-asynctasklabtest.output.dir}"/>
+    <path refid="library.robotium-solo-5.3.1.classpath"/>
+    <path refid="lab5-asynctasklab.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.lab5-asynctasklabtest">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.lab5-asynctasklabtest">
+    <patternset refid="excluded.from.module.lab5-asynctasklabtest"/>
+  </patternset>
+  
+  <path id="lab5-asynctasklabtest.module.sourcepath">
+    <dirset dir="${module.lab5-asynctasklabtest.basedir}">
+      <include name="src"/>
+      <include name="gen"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.lab5-asynctasklabtest" depends="compile.module.lab5-asynctasklabtest.production,compile.module.lab5-asynctasklabtest.tests" description="Compile module Lab5-AsyncTaskLabTest"/>
+  
+  <target name="compile.module.lab5-asynctasklabtest.production" depends="register.custom.compilers,compile.module.lab5-asynctasklab" description="Compile module Lab5-AsyncTaskLabTest; production classes">
+    <mkdir dir="${lab5-asynctasklabtest.output.dir}"/>
+    <javac2 destdir="${lab5-asynctasklabtest.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.lab5-asynctasklabtest}/javac">
+      <compilerarg line="${compiler.args.lab5-asynctasklabtest}"/>
+      <bootclasspath refid="lab5-asynctasklabtest.module.bootclasspath"/>
+      <classpath refid="lab5-asynctasklabtest.module.production.classpath"/>
+      <src refid="lab5-asynctasklabtest.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.lab5-asynctasklabtest"/>
+    </javac2>
+    
+    <copy todir="${lab5-asynctasklabtest.output.dir}">
+      <fileset dir="${module.lab5-asynctasklabtest.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.lab5-asynctasklabtest.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.lab5-asynctasklabtest.tests" depends="register.custom.compilers,compile.module.lab5-asynctasklabtest.production" description="compile module Lab5-AsyncTaskLabTest; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.lab5-asynctasklabtest" description="cleanup module">
+    <delete dir="${lab5-asynctasklabtest.output.dir}"/>
+    <delete dir="${lab5-asynctasklabtest.testoutput.dir}"/>
+  </target>
+</project>
