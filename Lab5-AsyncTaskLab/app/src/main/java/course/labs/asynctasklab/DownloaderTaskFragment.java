@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 public class DownloaderTaskFragment extends Fragment {
@@ -22,7 +23,7 @@ public class DownloaderTaskFragment extends Fragment {
 
 	@SuppressWarnings ("unused")
 	private static final String TAG = "Lab-Threads";
-	 private   String TAG_FRIEND_RES_IDS = "friends";
+	private  static String TAG_FRIEND_RES_IDS = "friends";
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,22 +31,22 @@ public class DownloaderTaskFragment extends Fragment {
 		// Preserve across reconfigurations
 		setRetainInstance(true);
 
-		Bundle b = new Bundle();
-		b = this.getArguments();
 
 		// TODO: Create new DownloaderTask that "downloads" data
 
-        new DownloaderTask().execute(b.getInt(TAG_FRIEND_RES_IDS));// .getIntegerArrayList(TAG_FRIEND_RES_IDS));
 
 		// TODO: Retrieve arguments from DownloaderTaskFragment
 		// Prepare them for use with DownloaderTask. 
 
-        
+		Bundle b = this.getArguments();
+		ArrayList<Integer> abc = b.getIntegerArrayList(TAG_FRIEND_RES_IDS);
+		Integer xyz[]= new Integer[abc.size()];
+		xyz = abc.toArray(xyz);
         
         
 		// TODO: Start the DownloaderTask 
-		
-        
+
+		new DownloaderTask().execute(xyz);
 
 	}
 
@@ -83,7 +84,7 @@ public class DownloaderTaskFragment extends Fragment {
 	public class DownloaderTask extends AsyncTask<Integer,Integer,String[]> {
 
 		@Override
-		protected String[] doInBackground(Integer... resourceIDS) {
+		protected String[] doInBackground(Integer[] resourceIDS) {
 			return downloadTweets(resourceIDS);
 		}
 
@@ -100,7 +101,7 @@ public class DownloaderTaskFragment extends Fragment {
 
 
 		private String[] downloadTweets(Integer resourceIDS[]) {
-			final int simulatedDelay = 20;
+			final int simulatedDelay = 2000;
 			String[] feeds = new String[resourceIDS.length];
 			try {
 				for (int idx = 0; idx < resourceIDS.length; idx++) {
@@ -112,7 +113,6 @@ public class DownloaderTaskFragment extends Fragment {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-
 					inputStream = mContext.getResources().openRawResource(
 							resourceIDS[idx]);
 					in = new BufferedReader(new InputStreamReader(inputStream));
@@ -137,6 +137,8 @@ public class DownloaderTaskFragment extends Fragment {
 			return feeds;
 		}
 
+
 	}
+
 
 }
